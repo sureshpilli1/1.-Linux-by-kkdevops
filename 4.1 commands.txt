@@ -1,0 +1,133 @@
+📄 Step 1: Create a Practice File
+
+Run this:
+
+nano practice_logs.txt
+
+Now paste the text below 👇
+
+2026-02-25 09:01:12 INFO  User login successful - username: suresh
+2026-02-25 09:02:45 ERROR Failed password attempt - username: admin
+2026-02-25 09:03:10 WARNING Disk usage at 85%
+2026-02-25 09:04:22 INFO  Docker container started - nginx
+2026-02-25 09:05:33 ERROR Database connection failed
+2026-02-25 09:06:41 INFO  Kubernetes pod created - payment-service
+2026-02-25 09:07:55 DEBUG Cache cleared successfully
+2026-02-25 09:08:20 INFO  User logout - username: suresh
+2026-02-25 09:09:11 ERROR Failed password attempt - username: root
+2026-02-25 09:10:42 WARNING Memory usage at 92%
+2026-02-25 09:11:30 INFO  Docker image pulled - openjdk:17
+2026-02-25 09:12:05 ERROR Service unavailable - api-gateway
+2026-02-25 09:13:49 INFO  Backup completed successfully
+2026-02-25 09:14:33 DEBUG Starting health check
+2026-02-25 09:15:20 ERROR Disk read failure on /dev/sda1
+2026-02-25 09:16:18 INFO  User login successful - username: admin
+2026-02-25 09:17:44 WARNING High CPU usage detected
+2026-02-25 09:18:59 INFO  Cron job executed - cleanup.sh
+2026-02-25 09:19:37 ERROR Timeout while connecting to database
+2026-02-25 09:20:50 INFO  Application deployed successfully
+
+Save and exit.
+
+🧪 Step 2: Practice grep Commands
+
+Now try these:
+
+🔍 1️⃣ Find all ERROR lines
+grep ERROR practice_logs.txt
+🔍 2️⃣ Count number of ERROR lines
+grep -c ERROR practice_logs.txt
+🔍 3️⃣ Case-insensitive search
+grep -i warning practice_logs.txt
+🔍 4️⃣ Show line numbers
+grep -n INFO practice_logs.txt
+🔍 5️⃣ Find lines containing both ERROR and database
+grep ERROR practice_logs.txt | grep database
+🔍 6️⃣ Find lines that start with date 2026-02-25
+grep ^2026 practice_logs.txt
+🔍 7️⃣ Find usernames
+grep username practice_logs.txt
+🔍 8️⃣ Find lines ending with "successfully"
+grep successfully$ practice_logs.txt
+🔥 Advanced Practice (For DevOps Level)
+
+Try:
+
+grep -E "ERROR|WARNING" practice_logs.txt
+grep -v INFO practice_logs.txt
+grep -i docker practice_logs.txt
+🎯 If You Want More Challenge
+
+I can generate:
+
+Apache access logs
+
+Kubernetes pod logs
+
+Systemd logs
+
+Mixed structured data
+
+Large dataset for regex practice
+
+Tell me what level you want 😎
+
+kubernetes pod logs
+
+Perfect 😎🔥
+Since you're learning Kubernetes seriously, here is a realistic Kubernetes pod log file for grep practice.
+
+📄 Step 1: Create a File
+nano k8s_pod_logs.txt
+
+Now paste this 👇
+
+2026-02-26T09:00:01Z INFO  [payment-service] Starting application...
+2026-02-26T09:00:03Z INFO  [payment-service] Connected to MySQL database
+2026-02-26T09:01:11Z ERROR [payment-service] Failed to process payment id=1023
+2026-02-26T09:02:45Z WARNING [payment-service] Slow response detected (2.5s)
+2026-02-26T09:03:12Z INFO  [auth-service] User login successful user=suresh
+2026-02-26T09:03:44Z ERROR [auth-service] Invalid JWT token received
+2026-02-26T09:04:18Z INFO  [inventory-service] Stock updated product_id=556
+2026-02-26T09:05:22Z ERROR [inventory-service] Database connection timeout
+2026-02-26T09:06:10Z INFO  [gateway] Request forwarded to payment-service
+2026-02-26T09:06:55Z DEBUG [gateway] Header validation passed
+2026-02-26T09:07:31Z ERROR [gateway] Upstream service unavailable
+2026-02-26T09:08:40Z INFO  [payment-service] Payment processed successfully id=1024
+2026-02-26T09:09:05Z WARNING [node-monitor] CPU usage at 91%
+2026-02-26T09:09:50Z INFO  [node-monitor] Memory usage normal
+2026-02-26T09:10:15Z ERROR [node-monitor] Disk pressure detected
+2026-02-26T09:11:22Z INFO  [auth-service] Token refreshed successfully user=admin
+2026-02-26T09:12:03Z ERROR [payment-service] NullPointerException at PaymentController.java:45
+2026-02-26T09:13:48Z INFO  [scheduler] Cron job cleanup started
+2026-02-26T09:14:17Z ERROR [scheduler] Cleanup job failed due to permission denied
+2026-02-26T09:15:30Z INFO  [inventory-service] Health check passed
+
+Save and exit.
+
+🧪 Practice grep Commands
+🔍 1️⃣ Find all ERROR logs
+grep ERROR k8s_pod_logs.txt
+🔍 2️⃣ Count total ERROR logs
+grep -c ERROR k8s_pod_logs.txt
+🔍 3️⃣ Show only payment-service logs
+grep payment-service k8s_pod_logs.txt
+🔍 4️⃣ Find logs related to database
+grep -i database k8s_pod_logs.txt
+🔍 5️⃣ Show logs with ERROR or WARNING
+grep -E "ERROR|WARNING" k8s_pod_logs.txt
+🔍 6️⃣ Exclude INFO logs
+grep -v INFO k8s_pod_logs.txt
+🔍 7️⃣ Find logs for a specific user
+grep user=admin k8s_pod_logs.txt
+🔍 8️⃣ Show line numbers with errors
+grep -n ERROR k8s_pod_logs.txt
+🔥 DevOps-Level Challenge
+
+Try extracting only service names:
+
+grep ERROR k8s_pod_logs.txt | grep -o "\[.*\]"
+
+Or find exceptions:
+
+grep Exception k8s_pod_logs.txt
