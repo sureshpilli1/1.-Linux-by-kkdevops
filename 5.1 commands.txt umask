@@ -1,0 +1,227 @@
+📌 Umask – User File Creation Mask
+🔹 What is umask?
+
+umask stands for User File Creation Mask.
+
+It is a value that determines the default permission settings for newly created files and directories.
+
+🔹 Understanding Permission Numbers
+
+Each digit in a permission or umask represents access rights using these values:
+
+Number	Permission	Symbol
+4	Read	r
+2	Write	w
+1	Execute	x
+🔹 Meaning of Permissions
+✅ Read (r)
+
+For files → Allows a user to view the contents of a file.
+
+For directories → Allows a user to:
+
+List files inside
+
+Access metadata (file names, permissions, etc.)
+
+✅ Write (w)
+
+For files → Allows a user to modify or delete a file.
+
+For directories → Allows a user to:
+
+Create files
+
+Delete files
+
+Rename files
+
+✅ Execute (x)
+
+For files → Allows a user to run the file (if it’s a program/script).
+
+For directories → Allows entering/accessing the directory.
+
+🔹 File Permission Structure
+
+Example:
+
+-rwxrwxrwx
+
+Breakdown:
+
+-   rwx   rwx   rwx
+|    |     |     |
+|    |     |     └── Others
+|    |     └──────── Group
+|    └────────────── User (Owner)
+└────────────────── File Type
+File Type Symbols
+Symbol	Meaning
+d	Directory
+-	Regular file
+l	Symbolic link
+🔹 Three Digits Correspond To
+Position	Represents
+First digit	Owner (User)
+Second digit	Group
+Third digit	Others (Everyone else)
+🔹 Default Maximum Permissions (Base Permissions)
+
+These are the starting permissions before applying umask.
+
+Item	Maximum Permissions	Symbolic Form
+Files	0666	rw-rw-rw-
+Directories	0777	rwxrwxrwx
+🔹 Understanding umask
+
+umask defines which permission bits should be masked (subtracted) from the default maximum permissions.
+
+🔹 Common umask Value
+
+A common umask value for both normal users and root:
+
+umask = 0022
+
+Check current umask:
+
+umask
+0022
+
+For both:
+
+ec2-user → 0022
+
+root → 0022
+
+🔹 Permission Calculation
+Formula
+Final Permission = Default Permission – umask
+
+(Each digit is subtracted individually)
+
+📁 For Files
+Base Permission:
+0666
+Umask:
+0022
+Calculation:
+0666
+-0022
+------
+0644
+Final File Permission:
+0644 → rw-r--r--
+Example
+touch hello.txt
+ls -lrth
+
+Output:
+
+-rw-r--r--  1 root root  0 May 29 09:52 hello.txt
+
+Breakdown:
+
+User	Group	Others
+6 → rw-	4 → r--	4 → r--
+📁 For Directories
+Base Permission:
+0777
+Umask:
+0022
+Calculation:
+0777
+-0022
+------
+0755
+Final Directory Permission:
+0755 → rwxr-xr-x
+Example
+mkdir devops
+ls -lrth
+
+Output:
+
+drwxr-xr-x  2 root root  6 May 29 09:51 devops
+
+Breakdown:
+
+User	Group	Others
+7 → rwx	5 → r-x	5 → r-x
+🔹 Same for Root and Normal Users
+User Type	umask	File Permissions	Directory Permissions
+Root	0022	0644 (rw-r--r--)	0755 (rwxr-xr-x)
+Normal User	0022	0644 (rw-r--r--)	0755 (rwxr-xr-x)
+🔹 Temporary Umask – Setting to 0222
+
+You can temporarily change umask in the current terminal:
+
+umask 0222
+
+Check it:
+
+umask
+0222
+🔹 Permission Calculation with umask 0222
+📁 For Directories
+Default:
+0777
+Umask:
+0222
+Calculation:
+0777
+-0222
+------
+0555
+Result:
+0555 → dr-xr-xr-x
+
+Meaning:
+
+Read & Execute only
+
+No write permission
+
+Example
+mkdir jenkins
+ls -lrth
+
+Output:
+
+dr-xr-xr-x  2 root root  6 May 29 09:57 jenkins
+📄 For Files
+Default:
+0666
+Umask:
+0222
+Calculation:
+0666
+-0222
+------
+0444
+Result:
+0444 → r--r--r--
+
+Meaning:
+
+Read-only for everyone
+
+Example
+touch jenkins.txt
+ls -lrth
+
+Output:
+
+-r--r--r--  1 root root  0 May 29 09:57 jenkins.txt
+🔹 Important Note
+
+This umask setting is temporary.
+
+Applies only to the current terminal session
+
+After closing the session, it resets to default
+
+📌 Quick Summary
+Umask	File Result	Directory Result
+0022	0644	0755
+0222	0444	0555
