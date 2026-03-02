@@ -1,0 +1,135 @@
+What Is a Link?
+
+A link is a pointer or reference to another file or directory on the filesystem. It doesn’t copy the data but simply points to the data blocks of the original file.
+
+There are two types of links:
+
+Hard Link
+
+Soft Link (Symbolic Link)
+
+How Links Work Internally
+
+Every file in Linux has an inode number, which stores metadata and points to the file’s data blocks.
+
+Hard links point to the same inode as the original.
+
+Soft links point to the filename path, not the inode.
+
+1. Hard Links
+
+A hard link is an exact mirror of the original file. It points directly to the inode (the data structure storing file content info) of a file.
+
+It points directly to the inode of the original file. In Linux, an inode is a structure that stores information about a file like its size, permissions, and location of the data on disk.
+
+Key Points:
+
+A hard link is identical to the original file because they both point to the same inode, making them equal without any distinction between “master” or “copy.”
+
+If you delete the original file, the data is still safe and accessible using the hard link.
+
+Hard links cannot be created for directories.
+
+You can create multiple hard links to the same file, and all will reflect the same content.
+
+Works only within the same filesystem.
+
+Step1: How to Create hardlink:
+ln original.txt hardlink.txt
+
+Now we’ll create a hard link—imagine this as giving the file another name that points to the same content.
+
+This command doesn’t copy the file. It just creates another reference (or name) that points to the same data on disk.
+
+Step 2: Check the inode numbers. ls -lrthi
+
+In Linux, files are actually stored as inodes (index nodes). Both the original and the hard link point to the same inode.
+
+Notice how both have the same inode number, This means they both point to the same location on the disk.
+
+Step 3: Display the content of both files
+
+Display the content of both files: originalfile.txt and hardlink.txt.
+
+Both show the same content, because they’re really the same file with two different names.
+
+Step: 4 Add New Content and Verify Data Sync
+
+Now, let’s add a new line to the file using the echo command:
+
+echo "this is project1" >> originalfile.txt
+
+This command appends the text "this is project1" to the end of originalfile.txt without affecting the existing content.
+
+Next, check the contents of both files:
+
+Notice: You’ll see the same data in both files, including the newly added line.
+
+As you can see, the data is synchronized between originalfile.txt and hardlink.txt.
+
+Step 5: Delete the original file
+
+Now let’s delete the original file:
+
+You might think the data is gone, right? Let’s check the hard link:
+
+Yes, it’s still there! The data is safe because the hard link (hardlink.txt) still points to the same inode. The actual file content is not deleted until all hard links to that inode are removed.
+
+
+
+2. Soft Links (Symbolic Links or Symlinks)
+
+A soft link is like a shortcut. It stores the path to the original file and points to it.
+
+Key Points
+
+Symlinks have a different inode.
+
+They can link to directories.
+
+If the original file is deleted, the symlink becomes a dangling (broken) link.
+
+Step1: How to Create hardlink:
+ln -s original.txt softlink.txt
+
+This creates softlink.txt as a shortcut to original.txt. It doesn’t copy the file, just points to it.
+
+Step 2: Check the inode numbers. ls -lrthi
+
+The inode numbers are different because the soft link is a separate file pointing to the original. This means softlink.txt is a symbolic link pointing to originalfile.txt.
+
+The arrow (->) shows that softlink.txt is a symbolic link pointing to originalfile.txt.
+
+Note that the inode numbers are different because the soft link is a separate file pointing to the original.
+
+Step 3: Display the content of both files
+
+Display the content of both files: originalfile.txt and softlink.txt.
+
+You’ll see the same content from both files.
+
+Why? Because softlink.txt is just a shortcut pointing to originalfile.txt. They show the same content since you’re accessing the same file through different names.
+
+Step: 4 Add New Content and Verify Data Sync
+
+Now, let’s add a new line to the file using the echo command:
+
+echo "this is project 2" >> originalfile.txt
+
+This command appends the text "this is project 2" to the end of originalfile.txt without affecting the existing content.
+
+Next, check the contents of both files:
+
+Both files show the same updated content.
+
+This confirms that the data is synced. Even when you view it through softlink.txt, it still reads from originalfile.txt.
+
+A soft link always points to the original file’s path, so any changes in the original are immediately reflected through the link.
+
+Step 5 : Delete the original file
+
+Now, let’s delete the original file. You might think the soft link will still work, but let’s find out:
+
+You will see output like: No such file or directory. Why? Because softlink.txt was just a pointer to originalfile.txt.
+
+Once the original file is deleted, the soft link becomes broken it has no content to point to. This is the key difference from a hard link, which still works even if the original is deleted.
