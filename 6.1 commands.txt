@@ -1,6 +1,7 @@
 What Is a Link?
 
-A link is a pointer or reference to another file or directory on the filesystem. It doesn’t copy the data but simply points to the data blocks of the original file.
+A link is a pointer or reference to another file or directory on the filesystem. 
+It doesn’t copy the data but simply points to the data blocks of the original file.
 
 There are two types of links:
 
@@ -18,13 +19,17 @@ Soft links point to the filename path, not the inode.
 
 1. Hard Links
 
-A hard link is an exact mirror of the original file. It points directly to the inode (the data structure storing file content info) of a file.
+A hard link is an exact mirror of the original file. 
+It points directly to the inode (the data structure storing file content info) of a file.
 
-It points directly to the inode of the original file. In Linux, an inode is a structure that stores information about a file like its size, permissions, and location of the data on disk.
+It points directly to the inode of the original file. 
+In Linux, an inode is a structure that stores information about a file like its size, 
+permissions, and location of the data on disk.
 
 Key Points:
 
-A hard link is identical to the original file because they both point to the same inode, making them equal without any distinction between “master” or “copy.”
+A hard link is identical to the original file because they both point to the same inode, 
+making them equal without any distinction between “master” or “copy.”
 
 If you delete the original file, the data is still safe and accessible using the hard link.
 
@@ -73,7 +78,8 @@ Now let’s delete the original file:
 
 You might think the data is gone, right? Let’s check the hard link:
 
-Yes, it’s still there! The data is safe because the hard link (hardlink.txt) still points to the same inode. The actual file content is not deleted until all hard links to that inode are removed.
+Yes, it’s still there! The data is safe because the hard link (hardlink.txt) still points to the same inode. 
+The actual file content is not deleted until all hard links to that inode are removed.
 
 
 
@@ -96,7 +102,8 @@ This creates softlink.txt as a shortcut to original.txt. It doesn’t copy the f
 
 Step 2: Check the inode numbers. ls -lrthi
 
-The inode numbers are different because the soft link is a separate file pointing to the original. This means softlink.txt is a symbolic link pointing to originalfile.txt.
+The inode numbers are different because the soft link is a separate file pointing to the original. 
+This means softlink.txt is a symbolic link pointing to originalfile.txt.
 
 The arrow (->) shows that softlink.txt is a symbolic link pointing to originalfile.txt.
 
@@ -108,7 +115,8 @@ Display the content of both files: originalfile.txt and softlink.txt.
 
 You’ll see the same content from both files.
 
-Why? Because softlink.txt is just a shortcut pointing to originalfile.txt. They show the same content since you’re accessing the same file through different names.
+Why? Because softlink.txt is just a shortcut pointing to originalfile.txt. 
+They show the same content since you’re accessing the same file through different names.
 
 Step: 4 Add New Content and Verify Data Sync
 
@@ -132,4 +140,5 @@ Now, let’s delete the original file. You might think the soft link will still 
 
 You will see output like: No such file or directory. Why? Because softlink.txt was just a pointer to originalfile.txt.
 
-Once the original file is deleted, the soft link becomes broken it has no content to point to. This is the key difference from a hard link, which still works even if the original is deleted.
+Once the original file is deleted, the soft link becomes broken it has no content to point to. 
+This is the key difference from a hard link, which still works even if the original is deleted.
