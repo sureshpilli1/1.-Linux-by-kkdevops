@@ -151,7 +151,7 @@ File Deletion Impact	         Still accessible	      Link breaks if original is 
 Works With	                   Files only	            Files and directories
 Data Synchronization	         Yes	                  Yes
 Cross-filesystem Linking	     No	                    Yes
-Identified With                ls -l	                Regular file	Starts with 'l'
+Identified With ls -l	         Regular file	           Starts with 'l'
 
 
 Use Cases
