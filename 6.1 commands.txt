@@ -142,3 +142,20 @@ You will see output like: No such file or directory. Why? Because softlink.txt w
 
 Once the original file is deleted, the soft link becomes broken it has no content to point to. 
 This is the key difference from a hard link, which still works even if the original is deleted.
+
+
+Hard Link vs Soft Link
+Feature   	                   Hard Link	            Soft Link (Symbolic)
+Inode Number	                 Same as original	      Different from original
+File Deletion Impact	         Still accessible	      Link breaks if original is deleted
+Works With	                   Files only	            Files and directories
+Data Synchronization	         Yes	                  Yes
+Cross-filesystem Linking	     No	                    Yes
+Identified With                ls -l	                Regular file	Starts with 'l'
+
+
+Use Cases
+Create multiple names for one file without duplicating data.
+Maintain backup references.
+Organize directory access using symbolic links.
+Shortcuts to config files or frequently accessed paths.
