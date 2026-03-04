@@ -154,6 +154,33 @@ Cross-filesystem Linking	     No	                    Yes
 Identified With ls -l	         Regular file	           Starts with 'l'
 
 
+
+
+
+3. tr Command (Translate Characters)
+
+tr is used to translate, replace, or delete characters from standard input (not directly from a file).
+
+Common Syntax
+tr [SET1] [SET2]
+
+It reads from stdin
+
+So you combine it with commands like cat, echo, or pipelines ( | )
+
+Example 1: Convert lowercase to uppercase
+cat names.txt | tr [a-z] [A-Z]
+Example 2: Remove all digits from input
+cat sample.txt | tr -d [0-9]
+
+The command tr -d [0-9] tells the system to delete all digits from the file content.
+
+Example 3: Append Uppercase Conversion to a file
+cat names.txt | tr [a-z] [A-Z] >> capital.txt
+
+This reads content from names.txt, converts all lowercase letters to uppercase, and appends the result to capital.txt.
+
+
 Use Cases
 Create multiple names for one file without duplicating data.
 Maintain backup references.
