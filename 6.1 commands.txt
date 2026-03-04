@@ -154,6 +154,13 @@ Cross-filesystem Linking	     No	                    Yes
 Identified With ls -l	         Regular file	           Starts with 'l'
 
 
+Use Cases
+Create multiple names for one file without duplicating data.
+Maintain backup references.
+Organize directory access using symbolic links.
+Shortcuts to config files or frequently accessed paths.
+
+
 
 
 
@@ -181,8 +188,152 @@ cat names.txt | tr [a-z] [A-Z] >> capital.txt
 This reads content from names.txt, converts all lowercase letters to uppercase, and appends the result to capital.txt.
 
 
-Use Cases
-Create multiple names for one file without duplicating data.
-Maintain backup references.
-Organize directory access using symbolic links.
-Shortcuts to config files or frequently accessed paths.
+
+
+
+
+
+4. sed — Stream Editor for Parsing and Transforming Files
+
+sed reads a file line-by-line and allows you to replace, delete, or print specific parts of text without opening the file manually.
+
+Basic Structure
+Example1: Replaces the first occurrence of “unix” with “linux” in each line.
+sed 's/unix/linux/' sample.txt
+
+It will replace the first occurrence of "unix" with "linux" in each line of sample.txt.
+
+s/ → Stands for substitute
+
+unix → The text you want to replace
+
+linux → The new text that will replace the old text
+
+/ → Separates components of the command
+
+sample.txt → The file in which replacements will be made
+Example2: Replaces the second occurrence of “unix” with “linux” per line.
+
+If the word unix appears only once on a line, nothing changes.
+
+If unix appears two or more times, only the second one gets changed to linux.
+
+sed 's/unix/linux/2' sample.txt
+s/ → Stands for substitute.
+
+unix → The text to find.
+
+linux → The replacement text.
+
+/2 → Targets the second occurrence of unix in each line.
+Example 3: Replaces all occurrences of “unix” with “linux” in every line.
+
+With the help of the g (global) flag in sed, you can replace all occurrences of a word in each line not just the first one.
+
+sed 's/unix/linux/g' sample.txt
+s/ → Stands for substitute.
+
+unix → The word to find.
+
+linux → The replacement word.
+
+/g → Globally replaces all occurrences of unix
+Line-Specific Substitution
+Example 4: Replaces “unix” with “linux” only on line 3.
+
+3 → Targets line 3 specifically.
+
+s/unix/linux/ → Replaces “unix” with “linux”, but only the first occurrence on that line.
+
+sed '3 s/unix/linux/' sample.txt
+Command With g
+
+/g → Ensures all occurrences of “unix” within the specified lines are replaced, not just the first match in each line. Here, line 3 is changed, with both instances of “unix” replaced by “linux.”
+
+sed '3 s/unix/linux/g' sample.txt
+Example 5: Replaces “unix” with “linux” on lines 1 to 3.
+sed '1,3 s/unix/linux/g' sample.txt
+1,3 → Applies the substitution only to lines 1 through 3.
+
+s/unix/linux/ → Replaces “unix” with “linux”.
+
+/g → Ensures all occurrences of “unix” within the specified lines are replaced, not just the first match in each line.
+Print Control
+Example 6: Replaces “am” with “was” on line 2 and prints the line twice.
+sed '2 s/am/was/p' sample.txt
+2 → Applies the substitution only to line 2.
+
+s/am/was/ → Replaces “am” with “was”.
+
+p → Print the line if a substitution happened
+
+It looks at line 2.
+
+If it finds "am", it replaces it with "was".
+
+Since you didn’t use the -n (no-print) option, sed prints the entire file by default.
+
+The p flag also prints the modified line again — so you’ll see that line twice.
+
+Example 7: Replaces “am” with “was” and prints only the modified lines.
+sed -n '2 s/am/was/p' sample.txt
+-n → Suppresses automatic printing of lines
+
+s/am/was/ → Substitutes “am” with “was”.
+
+p → Prints only the modified lines, instead of displaying the whole file.
+
+If "am" isn’t in line 2, nothing will be printed.
+
+This command only affects line 2 other lines remain untouched.
+
+If "am" appears on line 2, it will be replaced and printed.
+
+Deleting Lines
+Example 8: Deletes line 5 from the file.
+sed '5d' sample.txt
+5d → Deletes line 5 from sample.txt.
+
+d → Stands for delete, removing the specified line.
+
+Only line 5 is deleted.
+
+The rest of the file remains unchanged.
+
+Example 9: Deletes lines 3 to 6 from the file.
+sed '3,6d' sample.txt
+3,6d → Deletes lines 3 to 6 from sample.txt.
+
+d → Stands for delete, removing the specified range of lines.
+
+Lines 3 to 6 are deleted, while all other lines remain unchanged.
+
+Since your file has exactly 6 lines, deleting lines 3 to 6 will leave only lines 1 and 2.
+Viewing a Range of Lines
+Example 10: Displays only lines 2 to 5 from the file.
+sed -n '2,5p' sample.txt
+
+Only lines 2 to 5 are printed.
+
+The -n option ensures that only selected lines appear in the output.
+
+This command does not modify the original file just displays the chosen lines.
+
+Example 11: sed Command with Output Redirection
+sed 's/unix/linux/' sample.txt >> finalsample.txt
+Explanation:
+
+sed 's/unix/linux/' sample.txt → Replaces the first occurrence of "unix" with "linux" in each line of sample.txt.
+
+>> finalsample.txt → Appends the modified output to finalsample.txt instead of displaying it on the terminal.
+
+Key Considerations:
+
+This command does NOT modify sample.txt directly instead, it writes the changes to finalsample.txt.
+
+If finalsample.txt already exists, the output is added to the end of the file.
+
+If finalsample.txt does not exist, it is created.
+
+
+
