@@ -201,17 +201,11 @@ Basic Structure
 
 Example1: Replaces the first occurrence of “unix” with “linux” in each line.
 sed 's/unix/linux/' sample.txt
-
 It will replace the first occurrence of "unix" with "linux" in each line of sample.txt.
-
 s/ → Stands for substitute
-
 unix → The text you want to replace
-
 linux → The new text that will replace the old text
-
 / → Separates components of the command
-
 sample.txt → The file in which replacements will be made
 
 Example2: Replaces the second occurrence of “unix” with “linux” per line.
@@ -237,7 +231,8 @@ Example 4: Replaces “unix” with “linux” only on line 3.
 s/unix/linux/ → Replaces “unix” with “linux”, but only the first occurrence on that line.
 sed '3 s/unix/linux/' sample.txt
 Command With g
-/g → Ensures all occurrences of “unix” within the specified lines are replaced, not just the first match in each line. Here, line 3 is changed, with both instances of “unix” replaced by “linux.”
+/g → Ensures all occurrences of “unix” within the specified lines are replaced, not just the first match in each line. 
+Here, line 3 is changed, with both instances of “unix” replaced by “linux.”
 sed '3 s/unix/linux/g' sample.txt
 
 Example 5: Replaces “unix” with “linux” on lines 1 to 3.
