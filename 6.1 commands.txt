@@ -277,8 +277,8 @@ sed '3,6d' sample.txt
 d → Stands for delete, removing the specified range of lines.
 Lines 3 to 6 are deleted, while all other lines remain unchanged.
 Since your file has exactly 6 lines, deleting lines 3 to 6 will leave only lines 1 and 2.
-Viewing a Range of Lines
 
+Viewing a Range of Lines
 Example 10: Displays only lines 2 to 5 from the file.
 sed -n '2,5p' sample.txt
 Only lines 2 to 5 are printed.
