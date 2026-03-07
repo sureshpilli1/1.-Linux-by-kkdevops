@@ -297,146 +297,242 @@ If finalsample.txt already exists, the output is added to the end of the file.
 If finalsample.txt does not exist, it is created.
 
 
+notes from chatgpt:
+
+Replace Unix → Linux and Linux → Unix (swap)
+sed -e 's/Unix/temp/g' -e 's/Linux/Unix/g' -e 's/temp/Linux/g' sed_practice.txt
+
+Advanced Practice (Very Useful)
+
+Replace both Unix and Linux with OS
+sed -E 's/Unix|Linux/OS/g' sed_practice.txt
+
+Add text at the beginning of each line
+sed 's/^/INFO: /' sed_practice.txt
+
+Add text at the end of each line
+sed 's/$/ [checked]/' sed_practice.txt
+
+Remove empty lines
+sed '/^$/d' sed_practice.txt
+
+Replace both Unix and Linux with OS
+sed -E 's/Unix|Linux/OS/g' sed_practice.txt
+
+Replace the first word in each line
+sed 's/^[A-Za-z]*/SYSTEM/' sed_practice.txt
+
+Insert a line before line 1
+sed '1i ===== UNIX LINUX FILE =====' sed_practice.txt
+
+Append a line after line 3
+sed '3a This line was added using sed.' sed_practice.txt
+
+Replace only the first Linux in the file
+sed '0,/Linux/s/Linux/OS/' sed_practice.txt
+
+Convert Linux to lowercase
+sed 's/Linux/linux/g' sed_practice.txt
+
+Show line numbers
+sed '=' sed_practice.txt
+
+Replace Unix → Linux and Linux → Unix (swap)
+sed -e 's/Unix/temp/g' -e 's/Linux/Unix/g' -e 's/temp/Linux/g' sed_practice.txt
+
+Very Important sed Command (Used in DevOps)
+Edit file directly without printing to terminal:
+sed -i 's/Unix/Linux/g' sed_practice.txt
+-i → modifies the file in place.
+Example real-world usage:
+sed -i 's/image: nginx/image: nginx:latest/' deployment.yaml
+
+Used frequently in:
+Kubernetes YAML
+CI/CD scripts
+Dockerfiles
+configuration automation.
+
 
 
 
 5. find Command (Search Files & Directories)
-
 The find command in Linux is used to search files and directories based on various conditions such as 
 name, size, type, permission, modified time, etc.
 
 Basic Syntax
 find [starting-path] [options] [expression]
-
 starting-path: Where to begin the search (. means current directory, / means root).
-
 options: Flags like -type, -name, -size, etc.
-
 expression: The pattern or condition to search.
 
+
 1. Find empty files in home directory
-
 Lists all empty files in your home directory and subdirectories.
-
 find ~ -type f -empty
-
 find → Searches for files and directories.
-
 ~ → Specifies the home directory (/home/ec2-user).
-
 -type f → Limits the search to files only (excluding directories).
-
 -empty → Finds empty files (files with zero bytes).
 
 2. Find all empty files in the current directory
-
 When you were in ~ (your home directory):
-
 find . -type f -empty
-
 This looked from your home directory and below, and found:
-
 This includes empty files in all subdirectories (.cache/, logs/, etc.)
-
 Then you changed directory: cd devops123/
-
 Now . refers to the devops123/ folder, so when you run:
-
 find . -type f -empty
-
 It only checks inside devops123, and the output is:
-
 Lists all empty files in the current directory and subdirectories.
-
 file.txt was just created and has no content — it's completely empty.
-
 So find is correctly identifying and listing that file.
-
 So the result changes based on your current directory.
-
 Tip: Always check where you are (pwd) before using find . to understand the search scope.
 
 Understanding find with ~ vs .
 find ~ -type f -empty
-
 ~ refers to your home directory (e.g., /home/ec2-user).
-
 This command searches for all empty files anywhere inside your home directory no matter where you are in the terminal.
-
 Use this when you want to scan your whole home directory from anywhere.
-
 find . -type f -empty
-
 . refers to your current directory (where you're standing right now).
-
 This command searches for empty files only within the current directory and all its subdirectories.
-
 Use this when you only want to search from your current location.
-
 Use ~ when you want a complete scan of your space.
 Use . when you want a focused search within a specific project or directory.
 
 3. Find all empty files in /tmp
-
 Lists all empty files within /tmp.
-
 find /tmp -type f -empty
-
 find → Searches for files and directories.
-
 /tmp → Specifies the temporary directory as the search location.
-
 -type f → Limits the search to files only (excluding directories).
-
 -empty → Finds empty files (files with zero bytes).
 
 4. Search for a directory by name
 find ~ -type d -name linux
-
 -type d → search directories only
-
 ~ → Specifies the home directory as the search location.
-
 -type d → Limits the search to directories only (excluding files).
-
 -name linux → Looks for a directory exactly named linux (case-sensitive).
 
 5. Find files with 777 permissions
 find ~ -type f -perm 0777
 find . -type f -perm 0777
-
 Searches for files (-type f) in the home directory (~).
-
 Matches files with 777 permissions (-perm 0777).
-
 Searches for files (-type f) in the current directory (.).
-
 Matches files with 777 permissions (-perm 0777).
-
 Helps in identifying risky files for security review.
 
 6. Find all .txt files
-
 Lists all .txt files in your home directory and subdirectories.
-
 find ~ -type f -name "*.txt"
-
 find → Searches for files and directories.
-
 ~ → Specifies the home directory as the search location.
-
 -type f → Limits the search to files only (excluding directories).
-
 -name "*.txt" → Finds all .txt files matching the pattern exactly.
 
 7. Find File by Name Anywhere on the System
 sudo find / -type f -name "file.txt"
 What It Does:
-
 sudo → Runs the command with superuser privileges so it can access system-protected directories.
-
 find / → Starts searching from the root directory / meaning it will look everywhere on the system.
-
 -type f → Searches for regular files only.
-
 -name "file.txt" → Searches for files with the exact name file.txt.
+
+
+
+
+notes from chatgpt:
+
+File Size Search
+Find files larger than 100MB
+find / -type f -size +100M
+
+DevOps use this to find large logs filling disk.
+
+Find files smaller than 10KB
+find /home -type f -size -10k
+Find files exactly 50MB
+find /home -type f -size 50M
+File Time Search
+Find files modified in last 1 day
+find /var/log -type f -mtime -1
+
+Used to check recent log files.
+
+1 Find files older than 30 days
+find /var/log -type f -mtime +30
+
+Used for cleanup automation.
+
+1 Find files accessed in last 2 days
+find /home -type f -atime -2
+Permission Search
+1 Find files with 777 permission
+find / -type f -perm 0777
+
+Used in security audits.
+
+1 Find files owned by user
+find /home -user ec2-user
+1 Find files owned by group
+find /home -group devops
+
+Execute Commands with find
+1 Delete empty files automatically
+find /home -type f -empty -delete
+1 Delete files older than 30 days
+find /var/log -type f -mtime +30 -delete
+
+Common log cleanup job.
+
+1 Change permissions of files found
+find /app -type f -name "*.sh" -exec chmod +x {} \;
+
+Adds execute permission to scripts.
+
+1 Search and remove large logs
+find /var/log -type f -size +500M -exec rm -f {} \;
+
+Used when disk is full.
+
+2 Find files and display detailed info
+find /home -type f -name "*.log" -exec ls -lh {} \;
+
+Shows size, permissions, owner.
+
+Real DevOps Use Cases
+Disk full investigation
+find / -type f -size +1G
+Find large log files
+find /var/log -type f -size +100M
+Delete old backups
+find /backup -type f -mtime +7 -delete
+Find Docker container logs
+find /var/lib/docker -name "*.log"
+
+Pro DevOps Trick
+Combine find + grep
+Example:
+find /var/log -type f -name "*.log" | grep nginx
+Finds nginx log files.
+⚡ One Important Rule
+Always test with print first before delete
+Example:
+❌ Dangerous
+find /tmp -type f -mtime +10 -delete
+✅ Safe
+find /tmp -type f -mtime +10
+Check output → then delete.
+🧠 DevOps Interview Question
+Difference between
+find / -name file.txt
+and
+find . -name file.txt
+Answer:
+Command	Search Location
+find /	Whole system
+find .	Current directory
