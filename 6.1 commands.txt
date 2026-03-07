@@ -298,3 +298,145 @@ If finalsample.txt does not exist, it is created.
 
 
 
+
+
+5. find Command (Search Files & Directories)
+
+The find command in Linux is used to search files and directories based on various conditions such as 
+name, size, type, permission, modified time, etc.
+
+Basic Syntax
+find [starting-path] [options] [expression]
+
+starting-path: Where to begin the search (. means current directory, / means root).
+
+options: Flags like -type, -name, -size, etc.
+
+expression: The pattern or condition to search.
+
+1. Find empty files in home directory
+
+Lists all empty files in your home directory and subdirectories.
+
+find ~ -type f -empty
+
+find → Searches for files and directories.
+
+~ → Specifies the home directory (/home/ec2-user).
+
+-type f → Limits the search to files only (excluding directories).
+
+-empty → Finds empty files (files with zero bytes).
+
+2. Find all empty files in the current directory
+
+When you were in ~ (your home directory):
+
+find . -type f -empty
+
+This looked from your home directory and below, and found:
+
+This includes empty files in all subdirectories (.cache/, logs/, etc.)
+
+Then you changed directory: cd devops123/
+
+Now . refers to the devops123/ folder, so when you run:
+
+find . -type f -empty
+
+It only checks inside devops123, and the output is:
+
+Lists all empty files in the current directory and subdirectories.
+
+file.txt was just created and has no content — it's completely empty.
+
+So find is correctly identifying and listing that file.
+
+So the result changes based on your current directory.
+
+Tip: Always check where you are (pwd) before using find . to understand the search scope.
+
+Understanding find with ~ vs .
+find ~ -type f -empty
+
+~ refers to your home directory (e.g., /home/ec2-user).
+
+This command searches for all empty files anywhere inside your home directory no matter where you are in the terminal.
+
+Use this when you want to scan your whole home directory from anywhere.
+
+find . -type f -empty
+
+. refers to your current directory (where you're standing right now).
+
+This command searches for empty files only within the current directory and all its subdirectories.
+
+Use this when you only want to search from your current location.
+
+Use ~ when you want a complete scan of your space.
+Use . when you want a focused search within a specific project or directory.
+
+3. Find all empty files in /tmp
+
+Lists all empty files within /tmp.
+
+find /tmp -type f -empty
+
+find → Searches for files and directories.
+
+/tmp → Specifies the temporary directory as the search location.
+
+-type f → Limits the search to files only (excluding directories).
+
+-empty → Finds empty files (files with zero bytes).
+
+4. Search for a directory by name
+find ~ -type d -name linux
+
+-type d → search directories only
+
+~ → Specifies the home directory as the search location.
+
+-type d → Limits the search to directories only (excluding files).
+
+-name linux → Looks for a directory exactly named linux (case-sensitive).
+
+5. Find files with 777 permissions
+find ~ -type f -perm 0777
+find . -type f -perm 0777
+
+Searches for files (-type f) in the home directory (~).
+
+Matches files with 777 permissions (-perm 0777).
+
+Searches for files (-type f) in the current directory (.).
+
+Matches files with 777 permissions (-perm 0777).
+
+Helps in identifying risky files for security review.
+
+6. Find all .txt files
+
+Lists all .txt files in your home directory and subdirectories.
+
+find ~ -type f -name "*.txt"
+
+find → Searches for files and directories.
+
+~ → Specifies the home directory as the search location.
+
+-type f → Limits the search to files only (excluding directories).
+
+-name "*.txt" → Finds all .txt files matching the pattern exactly.
+
+7. Find File by Name Anywhere on the System
+sudo find / -type f -name "file.txt"
+What It Does:
+
+sudo → Runs the command with superuser privileges so it can access system-protected directories.
+
+find / → Starts searching from the root directory / meaning it will look everywhere on the system.
+
+-type f → Searches for regular files only.
+
+-name "file.txt" → Searches for files with the exact name file.txt.
