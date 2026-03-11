@@ -569,6 +569,7 @@ ps -ef        # Full formatted list
 Filter by user or command
 ps -ef | grep -i "ec2-user"
 ps -ef | grep -i "jenkins"
+
 1. Basic Process Overview
 ps displays processes running in the current shell session. Useful when you want to see only your terminal’s active tasks.
 ps -a lists processes associated with all users running on terminals.
