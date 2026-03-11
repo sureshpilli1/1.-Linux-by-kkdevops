@@ -536,3 +536,396 @@ Answer:
 Command	Search Location
 find /	Whole system
 find .	Current directory
+
+
+
+
+
+
+
+
+
+
+1. System Login, Checking Who’s Active
+“Let’s begin by checking who’s using the system and what’s going on.”
+who                 # Who is currently logged in
+date                # Check system time
+last -R ec2-user    # Review login history for ec2-user
+last -F             # Full login/logout time
+who shows currently logged-in users on the system.
+date displays the current system date and time.
+last -R ec2-user
+Lists the recent login history of the user ec2-user.
+last -F
+Displays full login/logout time stamps (including login and logout time with session duration).
+
+
+2. ps Command
+Purpose
+View currently running processes.
+ps
+ps -a
+ps -ef        # Full formatted list
+Filter by user or command
+ps -ef | grep -i "ec2-user"
+ps -ef | grep -i "jenkins"
+1. Basic Process Overview
+ps displays processes running in the current shell session. Useful when you want to see only your terminal’s active tasks.
+ps -a lists processes associated with all users running on terminals.
+Columns
+PID: Process ID
+TTY: Terminal type
+TIME: CPU time consumed
+CMD: Launched command
+
+2. Detailed Full Format of All Processes
+ps -ef displays every process on the system in a full-format listing.
+Meaning of flags:
+e → All processes
+f → Full-format (includes UID, PID, PPID, start time, command, etc.)
+
+3. Filter by User or Keyword (e.g., ec2-user)
+ps -ef | grep -i "ec2-user"
+ps -ef → Lists all system processes in full format
+grep -i "ec2-user" → Searches for the keyword ec2-user (case-insensitive)
+Filters the complete list of running processes to show only those related to ec2-user
+
+4. Process Monitoring and Apache Setup
+“Now let’s monitor system load and install Apache server.”
+sudo yum install httpd -y
+ps -ef | grep -i "http"     # See if Apache is running
+Install Apache
+Installs the Apache HTTP server (httpd) using yum.
+The -y flag automatically confirms the installation.
+
+
+3. top Command
+Purpose
+Monitor system resource utilization in real time.
+top
+Use case
+View current CPU and memory usage and identify resource-hungry processes.
+NOTE: Use df -h for disk usage.
+top focuses on CPU and memory.
+
+4. zip and unzip
+In Linux, the zip command compresses one or more files or directories into a single .zip archive file.
+This:
+Saves disk space
+Keeps data organized
+Makes it simple to share or backup files
+Uses:
+To reduce file size and save storage.
+To combine multiple files/folders into one for easier sharing.
+It’s supported on almost every platform, so zipped files can be opened easily on Windows, Linux, or macOS.
+
+Purpose
+Compress and extract folders.
+Step 1: Install ZIP Utility (If Not Already Installed)
+This installs the zip tool to compress files and directories.
+sudo yum install zip -y
+Example: To remove packages in Red Hat, we can use
+sudo yum remove tree -y
+
+Step 2: Create a Compressed ZIP Archive
+zip -r backup.zip backup/     # Compress the directory
+-r means recursive, so it includes all files and subfolders.
+This creates backup.zip containing everything inside the backup/ directory.
+
+Step 3: Verify ZIP & Clean Up (Optional)
+ls
+rm -r backup/
+Confirms backup.zip exists.
+Deletes the original backup/ to simulate recovery or free space.
+
+Step 4: Extract & Verify the Backup
+unzip backup.zip
+ls -lrth
+Restores the original backup/ directory.
+Confirms its successful extraction.
+
+Use Case
+Easy backups and file transfers that are portable and widely supported.
+
+
+
+
+5. tar command
+The tar command stands for Tape Archive. It is used to create archive files and extract files from archives. The command is essential for grouping multiple files and directories into a single file for easier storage, backup, or transfer.
+Purpose: Archive files/directories.
+tar Option Breakdown
+c → Create
+Create a new archive.
+x → Extract
+Extract files from an archive.
+v → Verbose
+Show progress in the terminal (lists each file being processed).
+f → File
+Specifies the archive file to create or extract.
+
+Step 1: Create a TAR archive
+tar -cvf backup.tar backup/   # Create an archive
+This packages the entire backup/ directory into a single file backup.tar.
+TAR is commonly used for backups or transfers.
+
+Step 2: Verify ZIP & Clean Up (Optional)
+ls -lrth
+rm -rf backup/
+Confirms backup.tar exists.
+Deletes the original backup/ to simulate recovery or free space.
+
+Step 3: Extract & Verify the Backup
+tar -xvf backup.tar    # Extract the archive
+ls -lrth
+Restores the original backup/ directory.
+Confirms its successful extraction.
+Use Case: Preferred in scripting, backups, and system packaging.
+
+6. How to Search Inside Zip Files Using zgrep
+zgrep lets you search for specific text patterns directly within compressed .zip files without extracting them first.
+Create a Zip File
+zip error.zip error.log
+This command compresses the file error.log into a new archive named error.zip.
+Search inside compressed file
+zgrep -i "database" error.zip
+Searches inside the compressed error.zip file for the text "database" (case-insensitive) without needing to unzip the file first.
+View zipped file content
+zcat error.zip
+Displays the contents of the compressed error.zip file directly to the terminal, without extracting it.
+
+7. Creating Users with useradd
+Only the root user or users with sudo privileges can create new users.
+“Let’s say you’re onboarding a team: Sai, Niranjan, kkfunda and Sunitha. Here’s how to add them.”
+
+Step 1: Add New Users
+Only the root user or those with sudo privileges can add users.
+sudo useradd sai
+sudo useradd niranjan
+sudo useradd kkfunda
+sudo useradd sunitha
+
+Each command creates a home directory (like /home/sai) and adds entries to /etc/passwd and /etc/group.
+
+Step 2: Verify the Users Are Created
+Check home directories
+ls -lrth /home/
+Check user entries
+sudo cat /etc/passwd
+Check group info
+cat /etc/group
+
+You should now see sai, niranjan, kkfunda, and sunitha listed.
+
+Step 3: Set Passwords for Each User
+sudo passwd sai
+sudo passwd niranjan
+sudo passwd kkfunda
+sudo passwd sunitha
+
+This prompts you to enter a new password for each user.
+
+Step 4: Verify Password Settings
+Check how password data is stored:
+sudo cat /etc/shadow
+You’ll see a 99999 in one of the fields — that’s the password expiry limit in days.
+
+Step 5: Switch to a New User & Test
+Let’s test niranjan’s account:
+su - niranjan
+You’ll be prompted for a password — enter the one you just set.
+Then confirm you’re in the correct user’s home.
+
+Example:
+[ec2-user@ip-172-31-14-201 ~]$ su - niranjan
+Password:
+[niranjan@ip-172-31-14-201 ~]$ ls -lrtha
+total 12k
+-rw-r--r-- 1 niranjan niranjan 522 Oct 29 2024 .bashrc
+-rw-r--r-- 1 niranjan niranjan 144 Oct 29 2024 .bash_profile
+-rw-r--r-- 1 niranjan niranjan 18 Oct 29 2024 .bash_logout
+drwx------ 2 niranjan niranjan 62 Jun 5 08:57 .
+drwxr-xr-x 7 root root 79 Jun 5 08:57 ..
+
+[niranjan@ip-172-31-14-201 ~]$ pwd
+/home/niranjan
+
+That confirms you’re successfully logged in as niranjan.
+
+8. chage Command: Managing User Password Expiry
+sudo chage kkfunda
+What does this do?
+The chage command is used to view or change user password aging information on Linux.
+When you run sudo chage username (e.g., kkfunda), it shows details like:
+
+• Last password change date
+• Password expiry date
+• Minimum and maximum password age
+• Warning period before password expires
+
+Example output:
+
+[ec2-user@ip-172-31-14-201 ~]$ sudo chage kkfunda
+Changing the aging information for kkfunda
+Enter the new value, or press ENTER for the default
+
+Minimum Password Age [0]: 30
+Maximum Password Age [99999]: 30
+Last Password Change (YYYY-MM-DD) [2025-06-05]:
+Password Expiration Warning [7]: 10
+Password Inactive [-1]:
+Account Expiration Date (YYYY-MM-DD) [-1]:
+
+Minimum Password Age
+Set to 30 → The user must wait 30 days before changing the password again.
+Maximum Password Age
+Originally was 99999 (i.e., effectively never expires), now set to 30 → Password will now expire every 30 days.
+Password Expiration Warning
+Changed from 7 to 10 → User will be warned 10 days before expiration to change password.
+
+Last Password Change
+Shows as 2025-06-05, confirming the latest update.
+Compare With Other Users
+sudo cat /etc/shadow
+
+You’ll notice:
+Other users like sai, niranjan, sunitha may still have values like 99999 (i.e., no expiry).
+Only kkfunda shows updated values for min, max age and warning period.
+
+Example output snippet:
+[ec2-user@ip-172-31-14-201 ~]$ sudo cat /etc/shadow
+root:*:20025:0:99999:7:::
+bin:*:20025:0:99999:7:::
+daemon:*:20025:0:99999:7:::
+...
+
+sai:$y$j9TSc2Qv3RzWf58IyQJbw/...:20244:0:99999:7:::
+niranjan:$y$j9TSdrJhJr9YECeL5310TxrS1SDP...:20244:0:99999:7:::
+kkfunda:$y$j9TS5xYAvCjHvAZuVH13Bv5R/...:20244:30:30:10:::
+sunitha:$y$j9TS9Ks0VQj...:20244:0:99999:7:::
+
+Why is this important?
+It helps administrators enforce security policies by setting password expiration and warning users to update passwords.
+You can proactively manage user password lifecycles, reducing risks of old or compromised passwords.
+
+9. Configure SSH Access for a User
+You want the new user Niranjan to be able to SSH into the server using the same key as the default EC2 user — without using a password.
+
+1. Navigate and check .ssh directory
+ls -lrtha
+cd .ssh/
+ls -lrth
+
+Example:
+[ec2-user@ip-172-31-0-204 ~]$ cd .ssh/
+[ec2-user@ip-172-31-0-204 .ssh]$
+[ec2-user@ip-172-31-0-204 .ssh]$ ls -lrth
+total 4.0K
+-rw-------. 1 ec2-user ec2-user 395 Jun  2 01:43 authorized_keys
+You’ll find the authorized_keys file here — this holds the public key allowing access.
+
+2. Create .ssh for Niranjan and copy EC2’s authorized_keys
+sudo mkdir /home/niranjan/.ssh
+sudo cp /home/ec2-user/.ssh/authorized_keys /home/niranjan/.ssh/
+Example execution:
+sudo mkdir /home/niranjan/.ssh
+sudo cp /home/ec2-user/.ssh/authorized_keys /home/niranjan/.ssh/
+sudo chown -R niranjan:niranjan /home/niranjan/.ssh
+sudo chmod 700 /home/niranjan/.ssh
+sudo chmod 600 /home/niranjan/.ssh/authorized_keys
+
+3. Set correct ownership and permissions
+sudo chown -R niranjan:niranjan /home/niranjan/.ssh
+sudo chmod 700 /home/niranjan/.ssh
+sudo chmod 600 /home/niranjan/.ssh/authorized_keys
+Test SSH login
+ssh -i "kkdevops.pem" niranjan@ec2-52-66-165-44.ap-south-1.compute.amazonaws.com
+Example output:
+Register this system with Red Hat Insights: rhc connect
+Example:
+# rhc connect --activation-key <key> --organization <org>
+The rhc client and Red Hat Insights will enable analytics and additional
+management capabilities on your system.
+Last login: Thu Jun  5 18:20:20 2025 from 49.37.158.128
+[niranjan@ip-172-31-14-201 ~]$ pwd
+/home/niranjan
+Now Niranjan can SSH into the server securely using the same EC2 key pair, and won’t be prompted for a password — perfect for seamless DevOps access.
+Best Practice: Always ensure correct permissions (700 for .ssh and 600 for authorized_keys) to avoid access issues.
+
+
+10. Group Management – Organizing Teams for New Joiners
+Imagine your organization just onboarded several new team members. To manage their permissions efficiently, instead of assigning access one by one, you create groups based on roles — like devops and development.
+
+Step 1: Create Role-Based Groups
+Think of groups as teams with shared access levels.
+
+sudo groupadd devops
+sudo groupadd development
+
+Example:
+[ec2-user@ip-172-31-14-201 ~]$ sudo groupadd devops
+[ec2-user@ip-172-31-14-201 ~]$ sudo groupadd development
+
+Now if you run:
+cat /etc/group
+You’ll see your new groups listed, like:
+devops:x:1005:
+development:x:1006:
+
+Step 2: Assign Users to Groups
+Now assign each user to the group that matches their job role:
+sudo usermod -aG devops sai
+sudo usermod -aG devops niranjan
+sudo usermod -aG devops kkfunda
+sudo usermod -aG development sunitha
+sudo usermod -aG development niranjan
+The -aG flag means: append the user to the specified group, without removing them from existing groups.
+Example execution:
+sudo usermod -aG devops sai
+sudo usermod -aG devops niranjan
+sudo usermod -aG devops kkfunda
+sudo usermod -aG development niranjan
+sudo usermod -aG development sunitha
+
+Step 3: Confirm Membership
+You can verify which groups a user belongs to:
+
+groups sai
+groups niranjan
+groups sunitha
+
+Example output:
+groups niranjan
+niranjan : niranjan devops development
+groups sai
+sai : sai devops
+groups sunitha
+sunitha : sunitha development
+You should see:
+sai belongs to devops
+niranjan belongs to both devops and development
+sunitha belongs to development
+
+11. Install & Use lid to List Group Members
+Once you’ve added users to groups like devops or development, you might want to verify membership easily. That’s where lid comes in.
+
+Step 1: Install libuser package
+lid is part of the libuser tools, so install it first:
+sudo yum install libuser -y
+
+Step 2: Use lid to check group members
+sudo lid -g devops
+sudo lid -g development
+This will list all the users assigned to each group.
+
+Example output:
+[ec2-user@ip-172-31-14-201 ~]$ sudo lid -g devops
+sai(uid=1001)
+niranjan(uid=1002)
+kkfunda(uid=1003)
+
+[ec2-user@ip-172-31-14-201 ~]$ sudo lid -g development
+niranjan(uid=1002)
+sunitha(uid=1004)
+Why use lid?
+
+Unlike checking /etc/group manually, lid gives a clean, direct list of users in a group — great for admins managing multiple teams.
