@@ -50,7 +50,8 @@ Swap:             0           0           0
 
 
 2. awk Command
-The awk command is a powerful text-processing tool in Linux. It processes text line-by-line and column-by-column, making it ideal for parsing structured text files like CSVs or logs.
+The awk command is a powerful text-processing tool in Linux. 
+It processes text line-by-line and column-by-column, making it ideal for parsing structured text files like CSVs or logs.
 Let’s walk through real-world awk examples using a sample file with the following structure:
 
 Sample Data File: employees.txt
