@@ -132,6 +132,15 @@ This reads content from names.txt, converts all lowercase letters to uppercase, 
 4. sed — Stream Editor for Parsing and Transforming Files
 sed reads a file line-by-line and allows you to replace, delete, or print specific parts of text without opening the file manually.
 Basic Structure
+sample.txt
+Line 1: I am learning unix unix unix
+Line 2: I am from nellore
+Line 2: unix is great unix
+Line 3: unix is powerful and flexible
+Line 4: unix unix unix
+Line 5: welcome to unix world
+
+
 
 Example1: Replaces the first occurrence of “unix” with “linux” in each line.
 sed 's/unix/linux/' sample.txt
