@@ -20,7 +20,7 @@ grep -l "UNIX" *         # Show files containing 'UNIX'
 grep -w "UNIX" abc.txt   # Match whole words only
 
 Example:
-grep "UNIX" abc.txt
+1. grep "UNIX" abc.txt
 That command searches for the exact word "UNIX" (uppercase) in the file abc.txt.
 Because grep is case-sensitive by default, it will only match "UNIX" and not variations like "Unix" or "unix".
 • grep is case-sensitive, meaning it distinguishes between uppercase and lowercase letters.
@@ -31,7 +31,7 @@ It doesn’t match anything because:
 But in the file, it's written as "UNIX" (all capital letters).
 • So it won’t find a match — because grep is case-sensitive by default.
 
-How to Make It Ignore Case Sensitivity
+2. How to Make It Ignore Case Sensitivity
 grep -i "UNIX" abc.txt   # Case-insensitive search
 To search without worrying about capital or small, just use -i like this:
 grep -i "unix" abc.txt
@@ -41,12 +41,12 @@ grep -i "UNIX" abc.txt
 where -i makes the search case-insensitive.
 This way, it finds "UNIX", "Unix", "unix", and any other variations of capitalization.
 
-Counting Matches
+3. Counting Matches
 grep -c "UNIX" abc.txt
 This command counts how many lines in abc.txt have the word "UNIX" in them.
 It doesn’t count how many times "UNIX" comes — it just counts the lines where "UNIX" is there at least one time.
 
-Show Files Containing the Word
+4. Show Files Containing the Word
 grep -l "UNIX" *
 • Searches all files in the current folder for the word "UNIX"
 • Lists only the names of files that contain the word
@@ -60,7 +60,7 @@ grep: devops: Is a directory
 grep: devops123: Is a directory
 because grep can’t read inside folders unless you use -r for recursive search
 
-Match Whole Words Only
+5. Match Whole Words Only
 grep -w "UNIX" abc.txt
 • Looks for the exact word "UNIX"
 • -w makes sure it matches whole words only
@@ -74,11 +74,11 @@ Show Only Matching Content
 grep -o "UNIX" abc.txt
 This prints only the word UNIX each time it appears, instead of the full line.
 
-Show Line Numbers
+6. Show Line Numbers
 grep -n "UNIX" abc.txt
 Displays line numbers alongside the matching lines.
 
-Show Lines That Do NOT Match
+7. Show Lines That Do NOT Match
 grep -v "UNIX" abc.txt
 -v inverts the match, meaning it shows lines that do not contain "UNIX".
 Example:
@@ -91,7 +91,7 @@ Example explanation:
 grep -inv "error" logs.txt
 It shows lines 1 to 5, and 7 to 13, but NOT line 6 because line 6 has "ERROR" in it.
 
-Context Search
+8. Context Search
 grep -A3 "error" logs.txt   # Show 3 lines after match
 grep -B3 "error" logs.txt   # Show 3 lines before match
 grep -C3 "error" logs.txt   # Show 3 lines before & after
@@ -105,7 +105,7 @@ grep -i -A3 "error" logs.txt
 This is useful for seeing the surrounding context.
 So, this will find "error" in logs.txt, ignoring case, and show the next three lines after each occurrence.
 
-Show Lines Before Match
+9. Show Lines Before Match
 grep -B3 "error" logs.txt
 Displays three lines before each match.
 Example:
@@ -113,7 +113,7 @@ grep -i -B3 "error" logs.txt
 Show Lines Before and After
 grep -C3 "error" logs.txt
 
-• -C3: Displays 3 lines before and after each match for "error".
+10 • -C3: Displays 3 lines before and after each match for "error".
 This is useful for getting full context around an occurrence.
 • "error": The search term, case-sensitive unless you add -i
 Example:
