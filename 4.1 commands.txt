@@ -124,7 +124,50 @@ grep -i -C3 "error" logs.txt
 
 
 
+Regex means Regular Expression.
+It is a pattern used to search, match, or manipulate text.
+In Linux commands like grep, sed, awk, regex helps you find specific patterns inside text or files.
+Example Regex Searches
+Find lines starting with error
+grep "^error" log.txt
+Example match:
+error database failed
+Find lines ending with log
+grep "log$" file.txt
+Example match:
+system.log
+Find numbers
+grep "[0-9]" file.txt
+Matches:
+server1
+port 8080
 
+
+| Symbol | Meaning                  | Example          |
+| ------ | ------------------------ | ---------------- |
+| `.`    | Any single character     | `a.c` → abc, axc |
+| `^`    | Start of line            | `^error`         |
+| `$`    | End of line              | `error$`         |
+| `*`    | Zero or more repetitions | `lo*`            |
+| `+`    | One or more repetitions  | `lo+`            |
+| `[ ]`  | Character set            | `[aeiou]`        |
+| `[^ ]` | Not in set               | `[^0-9]`         |
+
+
+Example Regex Searches
+Find lines starting with error
+grep "^error" log.txt
+Example match:
+error database failed
+Find lines ending with log
+grep "log$" file.txt
+Example match:
+system.log
+Find numbers
+grep "[0-9]" file.txt
+Matches:
+server1
+port 8080
 
 
 
