@@ -71,14 +71,15 @@ grep -o "UNIX" abc.txt   # Show only matching content
 grep -n "UNIX" abc.txt   # Show line numbers
 grep -v "UNIX" abc.txt   # Show lines that do NOT match
 Show Only Matching Content
-grep -o "UNIX" abc.txt
+
+6. grep -o "UNIX" abc.txt
 This prints only the word UNIX each time it appears, instead of the full line.
 
-6. Show Line Numbers
+7. Show Line Numbers
 grep -n "UNIX" abc.txt
 Displays line numbers alongside the matching lines.
 
-7. Show Lines That Do NOT Match
+8. Show Lines That Do NOT Match
 grep -v "UNIX" abc.txt
 -v inverts the match, meaning it shows lines that do not contain "UNIX".
 Example:
@@ -91,7 +92,7 @@ Example explanation:
 grep -inv "error" logs.txt
 It shows lines 1 to 5, and 7 to 13, but NOT line 6 because line 6 has "ERROR" in it.
 
-8. Context Search
+9. Context Search
 grep -A3 "error" logs.txt   # Show 3 lines after match
 grep -B3 "error" logs.txt   # Show 3 lines before match
 grep -C3 "error" logs.txt   # Show 3 lines before & after
@@ -105,7 +106,7 @@ grep -i -A3 "error" logs.txt
 This is useful for seeing the surrounding context.
 So, this will find "error" in logs.txt, ignoring case, and show the next three lines after each occurrence.
 
-9. Show Lines Before Match
+10. Show Lines Before Match
 grep -B3 "error" logs.txt
 Displays three lines before each match.
 Example:
@@ -113,7 +114,7 @@ grep -i -B3 "error" logs.txt
 Show Lines Before and After
 grep -C3 "error" logs.txt
 
-10 • -C3: Displays 3 lines before and after each match for "error".
+11 • -C3: Displays 3 lines before and after each match for "error".
 This is useful for getting full context around an occurrence.
 • "error": The search term, case-sensitive unless you add -i
 Example:
