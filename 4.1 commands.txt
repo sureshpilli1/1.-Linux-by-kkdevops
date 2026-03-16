@@ -1,3 +1,138 @@
+1. grep (Search for Patterns in Files)
+grep (Global Regular Expression Print) is used to search for patterns (text or regex) in files and display the matching lines.
+It's extremely useful for log searching, filtering data, code scanning, and text processing.
+vi abc.txt
+Welcome to the UNIX tutorial.
+UNIX is a powerful operating system.
+Many developers use UNIX daily.
+Some prefer Linux over UNIX.
+Understanding UNIX commands is essential.
+Errors in UNIX can be frustrating.
+UNIX shell scripting is very useful.
+Learning UNIX improves productivity.
+UNIX systems are reliable.
+
+Usage:
+grep "UNIX" abc.txt      # Case-sensitive search
+grep -i "UNIX" abc.txt   # Case-insensitive search
+grep -c "UNIX" abc.txt   # Count occurrences
+grep -l "UNIX" *         # Show files containing 'UNIX'
+grep -w "UNIX" abc.txt   # Match whole words only
+
+Example:
+grep "UNIX" abc.txt
+That command searches for the exact word "UNIX" (uppercase) in the file abc.txt.
+Because grep is case-sensitive by default, it will only match "UNIX" and not variations like "Unix" or "unix".
+• grep is case-sensitive, meaning it distinguishes between uppercase and lowercase letters.
+• When you use this command:
+grep "unix" abc.txt
+It doesn’t match anything because:
+• You wrote "unix" (all small letters).
+But in the file, it's written as "UNIX" (all capital letters).
+• So it won’t find a match — because grep is case-sensitive by default.
+
+How to Make It Ignore Case Sensitivity
+grep -i "UNIX" abc.txt   # Case-insensitive search
+To search without worrying about capital or small, just use -i like this:
+grep -i "unix" abc.txt
+Now it will match any form.
+Here we used:
+grep -i "UNIX" abc.txt
+where -i makes the search case-insensitive.
+This way, it finds "UNIX", "Unix", "unix", and any other variations of capitalization.
+
+Counting Matches
+grep -c "UNIX" abc.txt
+This command counts how many lines in abc.txt have the word "UNIX" in them.
+It doesn’t count how many times "UNIX" comes — it just counts the lines where "UNIX" is there at least one time.
+
+Show Files Containing the Word
+grep -l "UNIX" *
+• Searches all files in the current folder for the word "UNIX"
+• Lists only the names of files that contain the word
+• Doesn’t show the matching lines, just the filenames
+• The -l flag ensures that only filenames are displayed, rather than the matching lines themselves.
+Example explanation:
+• abc.txt and file4.txt both have the word "UNIX" in them
+• Other files don’t contain it (or maybe have lowercase like unix, which won’t match unless you use -i)
+• It also showed warnings for:
+grep: devops: Is a directory
+grep: devops123: Is a directory
+because grep can’t read inside folders unless you use -r for recursive search
+
+Match Whole Words Only
+grep -w "UNIX" abc.txt
+• Looks for the exact word "UNIX"
+• -w makes sure it matches whole words only
+• But not words like UNIXes, UNIX123, or UNI because those are not standalone
+
+Advanced Searching
+grep -o "UNIX" abc.txt   # Show only matching content
+grep -n "UNIX" abc.txt   # Show line numbers
+grep -v "UNIX" abc.txt   # Show lines that do NOT match
+Show Only Matching Content
+grep -o "UNIX" abc.txt
+This prints only the word UNIX each time it appears, instead of the full line.
+
+Show Line Numbers
+grep -n "UNIX" abc.txt
+Displays line numbers alongside the matching lines.
+
+Show Lines That Do NOT Match
+grep -v "UNIX" abc.txt
+-v inverts the match, meaning it shows lines that do not contain "UNIX".
+Example:
+grep -inv "error" logs.txt
+Explanation:
+• -i: Makes the search case-insensitive, so it matches "error", "Error", "ERROR", etc.
+• -n: Displays line numbers alongside the matching lines.
+• -v: Inverts the match, meaning it shows lines that do not contain "error".
+Example explanation:
+grep -inv "error" logs.txt
+It shows lines 1 to 5, and 7 to 13, but NOT line 6 because line 6 has "ERROR" in it.
+
+Context Search
+grep -A3 "error" logs.txt   # Show 3 lines after match
+grep -B3 "error" logs.txt   # Show 3 lines before match
+grep -C3 "error" logs.txt   # Show 3 lines before & after
+Show Lines After Match
+grep -A3 "error" logs.txt
+Shows the next three lines after each occurrence.
+Example:
+grep -i -A3 "error" logs.txt
+• -i: Makes the search case-insensitive, so it matches "error", "Error", "ERROR", etc.
+• -A3: Displays three lines after each match.
+This is useful for seeing the surrounding context.
+So, this will find "error" in logs.txt, ignoring case, and show the next three lines after each occurrence.
+
+Show Lines Before Match
+grep -B3 "error" logs.txt
+Displays three lines before each match.
+Example:
+grep -i -B3 "error" logs.txt
+Show Lines Before and After
+grep -C3 "error" logs.txt
+
+• -C3: Displays 3 lines before and after each match for "error".
+This is useful for getting full context around an occurrence.
+• "error": The search term, case-sensitive unless you add -i
+Example:
+grep -i -C3 "error" logs.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+notes for practice: 
+
 📄 Step 1: Create a Practice File
 
 Run this:
