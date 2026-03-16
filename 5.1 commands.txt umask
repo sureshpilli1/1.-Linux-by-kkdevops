@@ -166,7 +166,7 @@ Important Note
 This umask setting is temporary.
 Applies only to the current terminal session
 After closing the session, it resets to default
-Quick Summary
+Quick Summary 
 | Umask | File Result | Directory Result |
 | ----- | ----------- | ---------------- |
 | 0022  | 0644        | 0755             |
