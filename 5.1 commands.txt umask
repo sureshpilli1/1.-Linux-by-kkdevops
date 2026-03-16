@@ -4,10 +4,12 @@ umask stands for User File Creation Mask.
 It is a value that determines the default permission settings for newly created files and directories.
 Understanding Permission Numbers
 Each digit in a permission or umask represents access rights using these values:
-Number	Permission	Symbol
-4	      Read	      r
-2	      Write	      w
-1	      Execute	    x
+| Number | Permission | Symbol |
+| ------ | ---------- | ------ |
+| 4      | Read       | r      |
+| 2      | Write      | w      |
+| 1      | Execute    | x      |
+
 Meaning of Permissions
 Read (r)
 For files → Allows a user to view the contents of a file.
@@ -40,11 +42,12 @@ d	Directory
 -	Regular file
 l	Symbolic link
 Three Digits Correspond To
+| Position     | Represents             |
+| ------------ | ---------------------- |
+| First digit  | Owner (User)           |
+| Second digit | Group                  |
+| Third digit  | Others (Everyone else) |
 
-Position	     Represents
-First digit	   Owner (User)
-Second digit	 Group
-Third digit	   Others (Everyone else)
 Default Maximum Permissions (Base Permissions)
 These are the starting permissions before applying umask.
 Item	Maximum Permissions	Symbolic Form
@@ -107,9 +110,12 @@ Breakdown:
 User	Group	Others
 7 → rwx	5 → r-x	5 → r-x
 Same for Root and Normal Users
-User Type	umask	File Permissions	Directory Permissions
-Root	0022	0644 (rw-r--r--)	0755 (rwxr-xr-x)
-Normal User	0022	0644 (rw-r--r--)	0755 (rwxr-xr-x)
+
+| User Type   | umask | File Permissions | Directory Permissions |
+| ----------- | ----- | ---------------- | --------------------- |
+| Root        | 0022  | 0644 (rw-r--r--) | 0755 (rwxr-xr-x)      |
+| Normal User | 0022  | 0644 (rw-r--r--) | 0755 (rwxr-xr-x)      |
+
 Temporary Umask – Setting to 0222
 You can temporarily change umask in the current terminal:
 umask 0222
@@ -161,6 +167,7 @@ This umask setting is temporary.
 Applies only to the current terminal session
 After closing the session, it resets to default
 Quick Summary
-Umask	File Result	Directory Result
-0022	0644	0755
-0222	0444	0555
+| Umask | File Result | Directory Result |
+| ----- | ----------- | ---------------- |
+| 0022  | 0644        | 0755             |
+| 0222  | 0444        | 0555             |
